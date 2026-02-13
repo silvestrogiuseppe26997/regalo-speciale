@@ -13,7 +13,7 @@ def load_lottieurl(url):
         return None
     return r.json()
 
-lottie_heart = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_02p3ps9h.json") # Cuore che vola
+lottie_heart = load_lottieurl("https://lottie.host/85ed354c-1660-4966-ba09-90696a09148d/7YfB34e3W7.json")
 
 # --- INTERFACCIA ---
 st.title("Hai un messaggio speciale... 💌")
@@ -42,4 +42,5 @@ else:
         placeholder.subheader(displayed_text)
         time.sleep(0.1) # Effetto scrittura a macchina
     
+
     st.balloons() # Effetto festa final
