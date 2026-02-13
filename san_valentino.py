@@ -6,33 +6,36 @@ import time
 # Configurazione pagina
 st.set_page_config(page_title="Per Te", page_icon="❤️")
 
-# Funzione per caricare animazioni carine
 def load_lottieurl(url):
-    r = requests.get(url)
-    if r.status_code != 200:
+    try:
+        r = requests.get(url)
+        if r.status_code != 200:
+            return None
+        return r.json()
+    except:
         return None
-    return r.json()
 
+# Nuovo link super stabile
 lottie_heart = load_lottieurl("https://lottie.host/85ed354c-1660-4966-ba09-90696a09148d/7YfB34e3W7.json")
 
-# --- INTERFACCIA ---
 st.title("Hai un messaggio speciale... 💌")
 
 if "button_clicked" not in st.session_state:
     st.session_state.button_clicked = False
 
-def click_button():
-    st.session_state.button_clicked = True
-
-# Bottone iniziale
 if not st.session_state.button_clicked:
     st.write("Clicca sul cuore per farlo volare")
-    st.button("Premi qui ❤️", on_click=click_button)
-else:
-    # Mostra l'animazione del cuore/palloncino
-    st_lottie(lottie_heart, height=300, key="coding")
+    if st.button("Premi qui ❤️"):
+        st.session_state.button_clicked = True
+        st.rerun()
+
+if st.session_state.button_clicked:
+    # Se l'animazione è carica la mostra, altrimenti mostra un'emoji grande
+    if lottie_heart:
+        st_lottie(lottie_heart, height=300, key="coding")
+    else:
+        st.write("# ❤️🎈")
     
-    # Messaggio che appare gradualmente
     placeholder = st.empty()
     full_text = "Sei una cosa speciale per me. Ogni giorno con te è un regalo. ❤️"
     
@@ -40,7 +43,6 @@ else:
     for char in full_text:
         displayed_text += char
         placeholder.subheader(displayed_text)
-        time.sleep(0.1) # Effetto scrittura a macchina
+        time.sleep(0.1)
     
-
-    st.balloons() # Effetto festa final
+    st.balloons()
